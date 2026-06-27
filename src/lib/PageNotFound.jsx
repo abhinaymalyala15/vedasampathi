@@ -12,8 +12,8 @@ export default function PageNotFound() {
     queryKey: ['user'],
     queryFn: async () => {
       try {
-        const user = await api.get('/auth/me');
-        return { user, isAuthenticated: !!user };
+        const data = await api.get('/auth/me');
+        return { user: data?.user, isAuthenticated: !!data?.user };
       } catch {
         return { user: null, isAuthenticated: false };
       }

@@ -69,7 +69,7 @@ export const HERITAGE = {
   ],
 };
 
-export const LOGO_URL = 'https://media.base44.com/images/public/user_6a0f22d640b2c359109c75b9/7254333b3_ChatGPTImageJun15202608_36_50PM.png';
+export const LOGO_URL = '/logo.png';
 
 /** Static page hero banner images */
 export const PAGE_HEROES = {

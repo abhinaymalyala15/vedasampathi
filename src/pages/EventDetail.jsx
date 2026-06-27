@@ -15,7 +15,7 @@ export default function EventDetail() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    api.get('/auth/me').then(setCurrentUser).catch(() => setCurrentUser(null));
+    api.get('/auth/me').then((d) => setCurrentUser(d?.user || null)).catch(() => setCurrentUser(null));
   }, []);
 
   const { data: event, isLoading, refetch } = useQuery({

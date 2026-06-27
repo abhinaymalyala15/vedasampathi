@@ -4,9 +4,11 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Menu, X, Heart, Languages, ChevronDown, BookOpen, GraduationCap, School,
   UserCircle, LogIn, UserPlus, Search, Sun, Flame, BookMarked, Image, Newspaper,
-  ArrowRight,
+  ArrowRight, LogOut, LayoutDashboard,
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useAuth } from '@/lib/AuthContext';
+import { getPortalPath } from '@/components/RoleRoute';
 import { Button } from '@/components/ui/button';
 import { EASE_OUT } from '@/lib/motion';
 
@@ -22,6 +24,7 @@ const contentLinks = [
 
 export default function Navbar() {
   const { t, language, toggleLanguage } = useLanguage();
+  const { isAuthenticated, user, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -69,7 +72,7 @@ export default function Navbar() {
     const active = path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
     return `nav-link-underline px-4 py-2 text-sm font-medium transition-colors ${
       active ? 'active' : ''
-    } ${onHero ? 'text-white/90 hover:text-secondary' : 'text-temple-brown/80 hover:text-primary'}`;
+    } ${onHero ? 'text-white hover:text-secondary nav-hero-text' : 'text-temple-brown/80 hover:text-primary'}`;
   };
 
   return (
@@ -87,7 +90,7 @@ export default function Navbar() {
               alt="Vedasampatti"
               className="w-10 h-10 lg:w-11 lg:h-11 rounded-full object-cover ring-2 ring-secondary/50 group-hover:ring-secondary/80 transition-all duration-300"
             />
-            <span className={`font-heading text-lg lg:text-xl font-semibold tracking-wide hidden sm:block transition-colors ${onHero ? 'text-white' : 'text-primary'}`}>
+            <span className={`font-heading text-lg lg:text-xl font-semibold tracking-wide hidden sm:block transition-colors ${onHero ? 'text-white nav-hero-text' : 'text-primary'}`}>
               Vedasampatti
             </span>
           </Link>
@@ -107,7 +110,7 @@ export default function Navbar() {
                 aria-haspopup="true"
                 className={`nav-link-underline flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors ${
                   megaOpen || isActive('/scholars') || isActive('/pathasalas') ? 'active' : ''
-                } ${onHero ? 'text-white/90 hover:text-secondary' : 'text-temple-brown/80 hover:text-primary'}`}
+                } ${onHero ? 'text-white hover:text-secondary nav-hero-text' : 'text-temple-brown/80 hover:text-primary'}`}
               >
                 Directory
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${megaOpen ? 'rotate-180' : ''}`} />
@@ -179,7 +182,7 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-2 z-10">
             <button
               className={`hidden md:flex w-10 h-10 items-center justify-center rounded-full transition-all ${
-                onHero ? 'text-white/75 hover:text-secondary hover:bg-white/10' : 'text-foreground/60 hover:text-primary hover:bg-muted/80'
+                onHero ? 'text-white hover:text-secondary hover:bg-white/12 nav-hero-icon' : 'text-foreground/60 hover:text-primary hover:bg-muted/80'
               }`}
               aria-label="Search"
             >
@@ -190,7 +193,7 @@ export default function Navbar() {
               onClick={toggleLanguage}
               className={`inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border text-xs font-bold tracking-widest uppercase transition-all ${
                 onHero
-                  ? 'border-secondary/40 bg-black/20 text-secondary backdrop-blur-sm'
+                  ? 'border-secondary/50 bg-black/35 text-secondary backdrop-blur-sm nav-hero-text'
                   : 'border-secondary/30 bg-card text-temple-brown hover:border-secondary/50'
               }`}
               aria-label="Switch language"
@@ -201,7 +204,7 @@ export default function Navbar() {
 
             <button
               className={`hidden md:flex w-10 h-10 items-center justify-center rounded-full transition-all ${
-                onHero ? 'text-white/75 hover:text-secondary hover:bg-white/10' : 'text-foreground/60 hover:text-primary hover:bg-muted/80'
+                onHero ? 'text-white hover:text-secondary hover:bg-white/12 nav-hero-icon' : 'text-foreground/60 hover:text-primary hover:bg-muted/80'
               }`}
               aria-label="Toggle theme"
             >
@@ -223,7 +226,7 @@ export default function Navbar() {
                   profileOpen
                     ? 'bg-primary text-primary-foreground shadow-premium'
                     : onHero
-                      ? 'border border-white/25 bg-white/10 hover:bg-white/20 text-white/85'
+                      ? 'border border-white/35 bg-black/30 hover:bg-black/45 text-white nav-hero-text'
                       : 'border border-border/60 bg-card hover:bg-muted/80 text-foreground/70'
                 }`}
               >
@@ -236,14 +239,35 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 6, scale: 0.98 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full right-0 mt-2 w-48 bg-white/95 backdrop-blur-xl rounded-2xl shadow-premium-lg border border-border/50 overflow-hidden"
+                    className="absolute top-full right-0 mt-2 w-52 bg-white/95 backdrop-blur-xl rounded-2xl shadow-premium-lg border border-border/50 overflow-hidden"
                   >
-                    <Link to="/login" className="flex items-center gap-3 px-4 py-3.5 text-sm hover:bg-muted/60 transition-colors">
-                      <LogIn className="w-4 h-4 text-primary" /> Login
-                    </Link>
-                    <Link to="/register" className="flex items-center gap-3 px-4 py-3.5 text-sm hover:bg-muted/60 transition-colors border-t border-border/40">
-                      <UserPlus className="w-4 h-4 text-primary" /> Sign Up
-                    </Link>
+                    {isAuthenticated ? (
+                      <>
+                        <div className="px-4 py-3 border-b border-border/40">
+                          <p className="text-sm font-semibold text-foreground truncate">{user?.name || user?.full_name}</p>
+                          <p className="text-xs text-muted-foreground capitalize">{user?.role} portal</p>
+                        </div>
+                        <Link to={getPortalPath(user?.role)} className="flex items-center gap-3 px-4 py-3.5 text-sm hover:bg-muted/60 transition-colors">
+                          <LayoutDashboard className="w-4 h-4 text-primary" /> My Portal
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => { setProfileOpen(false); logout(); }}
+                          className="flex w-full items-center gap-3 px-4 py-3.5 text-sm hover:bg-muted/60 transition-colors border-t border-border/40 text-destructive"
+                        >
+                          <LogOut className="w-4 h-4" /> Logout
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link to="/login" className="flex items-center gap-3 px-4 py-3.5 text-sm hover:bg-muted/60 transition-colors">
+                          <LogIn className="w-4 h-4 text-primary" /> Login
+                        </Link>
+                        <Link to="/register" className="flex items-center gap-3 px-4 py-3.5 text-sm hover:bg-muted/60 transition-colors border-t border-border/40">
+                          <UserPlus className="w-4 h-4 text-primary" /> Sign Up
+                        </Link>
+                      </>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -252,7 +276,7 @@ export default function Navbar() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-full transition-colors ${
-                onHero ? 'text-white/85 hover:bg-white/10' : 'hover:bg-muted/80 text-foreground'
+                onHero ? 'text-white hover:bg-white/12 nav-hero-icon' : 'hover:bg-muted/80 text-foreground'
               }`}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             >

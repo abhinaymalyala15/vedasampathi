@@ -2,8 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { LogOut, Menu } from 'lucide-react';
 import { useAuth } from '@/lib/AuthContext';
-
-const LOGO_URL = 'https://media.base44.com/images/public/user_6a0f22d640b2c359109c75b9/7254333b3_ChatGPTImageJun15202608_36_50PM.png';
+import { LOGO_URL } from '@/lib/templeAssets';
 
 export default function PortalShell({ title, navItems, children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);

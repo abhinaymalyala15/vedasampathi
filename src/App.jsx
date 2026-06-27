@@ -8,8 +8,7 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import { LanguageProvider } from '@/context/LanguageContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-import { Navigate } from 'react-router-dom';
-import ProtectedRoute from '@/components/ProtectedRoute';
+import RoleRoute from '@/components/RoleRoute';
 import PublicLayout from '@/components/PublicLayout';
 import ScholarPortalLayout from '@/components/ScholarPortalLayout';
 import PathasalaPortalLayout from '@/components/PathasalaPortalLayout';
@@ -118,8 +117,8 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
-      {/* Scholar portal (auth required) */}
-      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+      {/* Scholar portal */}
+      <Route element={<RoleRoute roles={['scholar', 'admin']} />}>
         <Route element={<ScholarPortalLayout />}>
           <Route path="/dashboard" element={<ScholarDashboard />} />
           <Route path="/profile" element={<ScholarProfile />} />
@@ -131,8 +130,8 @@ const AuthenticatedApp = () => {
         </Route>
       </Route>
 
-      {/* Pathasala portal (auth required) */}
-      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+      {/* Pathasala portal */}
+      <Route element={<RoleRoute roles={['pathasala', 'admin']} />}>
         <Route element={<PathasalaPortalLayout />}>
           <Route path="/pathasala/dashboard" element={<PathasalaDashboard />} />
           <Route path="/pathasala/details" element={<PathasalaDetails />} />
@@ -142,8 +141,8 @@ const AuthenticatedApp = () => {
         </Route>
       </Route>
 
-      {/* Admin panel (auth required) */}
-      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+      {/* Admin panel */}
+      <Route element={<RoleRoute roles={['admin']} />}>
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/approvals" element={<AdminApprovals />} />

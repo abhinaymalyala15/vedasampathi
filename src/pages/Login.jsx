@@ -19,7 +19,7 @@ export default function Login() {
     setLoading(true);
     try {
       const user = await login(email, password);
-      toast.success(`Welcome back, ${user.name}!`);
+      toast.success(`Welcome back, ${user.name || user.full_name}!`);
       if (user.role === 'admin') navigate('/admin');
       else if (user.role === 'pathasala') navigate('/pathasala/dashboard');
       else navigate('/dashboard');
