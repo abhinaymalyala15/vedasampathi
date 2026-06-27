@@ -1,39 +1,54 @@
-**Welcome to your Base44 project** 
+# Vedasampatti
 
-**About**
+Premium heritage portal for preserving Vedic wisdom — connecting scholars, pathasalas, and devotees across India.
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+## Tech stack
 
-This project contains everything you need to run your app locally.
+- React 18 + Vite 6
+- React Router
+- TanStack Query
+- Tailwind CSS + shadcn/ui
+- Framer Motion
 
-**Edit the code in your local development environment**
+## Local setup
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
-
-**Prerequisites:** 
-
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
-
+```bash
+git clone https://github.com/abhinaymalyala15/vedasampathi.git
+cd vedasampathi
+npm install
 ```
+
+Create `.env.local`:
+
+```env
 VITE_BASE44_APP_ID=your_app_id
 VITE_BASE44_APP_BASE_URL=your_backend_url
-
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
 ```
 
-Run the app: `npm run dev`
+Run the dev server:
 
-**Publish your changes**
+```bash
+npm run dev
+```
 
-Open [Base44.com](http://Base44.com) and click on Publish.
+Open [http://localhost:5173](http://localhost:5173)
 
-**Docs & Support**
+## Build
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+```bash
+npm run build
+npm run preview
+```
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+## Project structure
+
+- `src/components/home/` — Homepage sections (hero, directories, knowledge, donate)
+- `src/pages/static/` — Vedic content pages (Vedas, Mantras, Gallery, etc.)
+- `public/` — Heritage images and assets
+- `src/lib/templeAssets.js` — Central image path config
+
+## Base44 integration
+
+This project syncs with [Base44](https://Base44.com). Push changes to GitHub to reflect them in the Base44 Builder.
+
+Docs: [Using GitHub with Base44](https://docs.base44.com/Integrations/Using-GitHub)
